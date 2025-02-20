@@ -1,26 +1,24 @@
-#!/usr/bin/env python3
-
-from teacher import Teacher
-from user import User
-
-my_teacher = Teacher("My", "Teacher")
+import pytest
+from lib.user import User  # Explicitly import User
+from lib.teacher import Teacher  # Import Teacher
 
 class TestTeacher:
-    '''Class "Teacher" in teacher.py'''
-
     def test_is_subclass(self):
         '''is a subclass of "User".'''
-        assert(User in Teacher.__bases__)
+        assert User in Teacher.__bases__
 
-    def test_initializes_with_names(self):
+    def test_initializes_with_name(self):
         '''initializes with first and last name.'''
-        assert((my_teacher.first_name, my_teacher.last_name) == ("My", "Teacher"))
+        teacher = Teacher("Jane", "Smith")
+        assert teacher.first_name == "Jane"
+        assert teacher.last_name == "Smith"
 
-    def test_has_attribute_knowledge(self):
+    def test_has_knowledge_list(self):
         '''has an attribute called "knowledge", a list with len > 0.'''
-        assert(isinstance(my_teacher.knowledge, list) and len(my_teacher.knowledge) > 0)
+        assert isinstance(Teacher.knowledge, list)
+        assert len(Teacher.knowledge) > 0
 
-    def test_can_teach(self):
+    def test_teach_method(self):
         '''teaches from list of knowledge.'''
-        my_teacher = Teacher("My", "Teacher")
-        assert(my_teacher.teach() in my_teacher.knowledge)
+        teacher = Teacher("Jane", "Smith")
+        assert teacher.teach() in Teacher.knowledge
